@@ -21,3 +21,11 @@ a {
 .footer-margin {
   margin-bottom: 1rem;
 }
+
+.courtesy-link {
+  gap: 0.15rem;
+
+  & a:first-child {
+    margin-right: 0.2rem;
+  }
+}

@@ -161,7 +161,6 @@ async function fetchBooks(value) {
 
     books.map((book) => createCard(book));
   } catch (err) {
-    console.log(err);
     renderModal('error', err);
   }
 }
