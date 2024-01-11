@@ -1,0 +1,50 @@
+@use "../abstracts/variables" as *;
+
+// HEADER
+.header-homepage {
+  height: 83vh;
+}
+
+.sticky {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  padding: 2.5rem 0 1.25rem 0;
+  background-color: $clr-light;
+}
+
+.logo {
+  width: $size-l;
+}
+
+.caption {
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+//------------------------------------------------------------------------------
+
+// SEARCH BAR
+.search-container {
+  width: min(74%, 23rem);
+}
+
+.search-input {
+  height: 2.125rem;
+  padding: 0.313rem 0.938rem;
+
+  &::placeholder {
+    font-size: $size-s;
+  }
+}
+
+.search-button {
+  right: 0;
+  background: none;
+  height: 2.125rem;
+  padding: 0 0.563rem;
+}
+
+.search-icon {
+  width: $size-m;
+}

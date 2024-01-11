@@ -1,0 +1,103 @@
+@use "../abstracts/variables" as *;
+
+body {
+  background-color: $clr-light;
+  font-family: 'Poppins', sans-serif;
+}
+
+.search-results {
+  width: min(74%, 23rem);
+  margin: 0.625rem 0 1.875rem 0;
+  gap: 0.313rem;
+}
+
+//------------------------------------------------------------------------------
+
+// UTILITY CLASSES
+// Flexbox
+.flex {
+  display: flex;
+}
+
+.flex-col {
+  flex-direction: column;
+}
+
+.flex-cc {
+  justify-content: center;
+  align-items: center;
+}
+
+// Display None
+.hidden {
+  display: none;
+}
+
+// Position
+.abs {
+  position: absolute;
+}
+
+.rel {
+  position: relative;
+}
+
+// Text
+.large-text {
+  font-size: $size-l;
+}
+
+.medium-text {
+  font-size: $size-m;
+}
+
+.small-text {
+  font-size: $size-s;
+}
+
+.x-small-text {
+  font-size: $size-xs;
+}
+
+.light-text {
+  font-weight: 200;
+  font-style: italic;
+}
+
+.dark-text {
+  color: $clr-dark;
+}
+
+.word-wrap {
+  word-wrap: break-word;
+}
+
+// Width 100%
+.w-100 {
+  width: 100%;
+}
+
+// Border Radius
+.b-radius {
+  border-radius: 0.438rem;
+}
+
+// Focus
+.focus:focus,
+.focus-v:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0.5rem $clr-darker-t;
+  transition: all 0.2s ease-in-out;
+}
+
+// Overflow
+// To hide scrollbar on both x and y asis
+// To Prevent Scrolling When Modal Is Open
+.overflow-h {
+  overflow: hidden;
+}
+
+// To hide scrollbar on x-asis
+.overflow-x-h {
+  overflow-x: hidden;
+}

@@ -1,0 +1,23 @@
+@use "../abstracts/variables" as *;
+
+// FOOTER
+.social-icon {
+  width: $size-ml;
+}
+
+footer div {
+  gap: 0.5rem;
+  margin-bottom: 0.2rem;
+}
+
+a {
+  padding: 0.2rem;
+}
+
+.footer-homepage {
+  height: 12vh;
+}
+
+.footer-margin {
+  margin-bottom: 1rem;
+}

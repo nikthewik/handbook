@@ -1,0 +1,51 @@
+@use "../abstracts/variables" as *;
+
+// MODAL
+.modal-background {
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100%;
+  z-index: 999;
+  background-color: $clr-darker-t;
+  -webkit-backdrop-filter: blur(2px); //For Safari
+  backdrop-filter: blur(2px);
+}
+
+.modal-container {
+  height: min(83%, 38rem);
+  gap: 1rem;
+}
+
+.modal-container,
+.error-container {
+  width: min(82%, 30rem);
+  padding: 3.5rem 1.5rem 3.5rem 1.5rem;
+  background-color: $clr-lighter;
+  box-shadow: 0 0 0.5rem $clr-darker-t;
+}
+
+.modal-img {
+  width: $size-xxxl;
+  object-fit: cover;
+}
+
+.modal-text,
+.modal-description {
+  padding: 0 0.5rem 0 0.5rem;
+}
+
+.modal-description {
+  overflow-y: scroll;
+}
+
+.modal-button {
+  top: 0;
+  right: 0;
+  margin: 1rem;
+  background: transparent;
+}
+
+.modal-close-img {
+  width: 1.9rem;
+}

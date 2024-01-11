@@ -1,0 +1,23 @@
+@use "../abstracts/variables" as *;
+
+//SCROLLBAR
+//Firefox
+.scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: $clr-light $clr-light-t2;
+}
+
+//Chrome, Edge and Safari
+.scrollbar::-webkit-scrollbar {
+  width: 0.45rem;
+}
+
+.scrollbar::-webkit-scrollbar-thumb {
+  border-radius: 0.438rem;
+  background-color: $clr-light;
+}
+
+.scrollbar::-webkit-scrollbar-track {
+  border-radius: 0.438rem;
+  background-color: $clr-lighter;
+}

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, shrink-to-fit=no, viewport-fit=cover" />
+    <meta name="theme-color" content="#FFFFFF" />
+    <!-- TITLE -->
+    <title>HandBook</title>
+    <!-- AUTHOR -->
+    <meta name="author" content="Nicola Pavoni" />
+    <!-- DESCRIPTION -->
+    <meta name="description" content="HandBook" />
+    <!-- KEYWORDS -->
+    <meta
+      name="keywords"
+      content="HandBook, books, search, genres, nikthewik, Nicola Pavoni" />
+    <!-- FAVICON -->
+    <link
+      rel="shortcut icon"
+      type="image/x-icon"
+      width="16px"
+      href="./assets/img/favicon.ico" />
+    <!-- FONTS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,200;0,400;1,200&display=swap"
+      rel="stylesheet" />
+    <!-- SCSS -->
+    <link rel="stylesheet" href="/assets/scss/main.scss" />
+    <!-- JS -->
+    <script type="module" src="/assets/js/main.js"></script>
+  </head>
+  <body class="dark-text">
+    <div class="flex flex-col flex-cc">
+      <!-- HEADER header-homepage sticky -->
+      <header class="header-homepage w-100 flex flex-col flex-cc">
+        <!-- LOGO & BRAND -->
+        <div class="flex flex-cc">
+          <img class="logo" src="/assets/img/logo.png" alt="Logo of a book" />
+          <h1 class="large-text">HandBook</h1>
+        </div>
+        <!-- CAPTION -->
+        <div class="flex flex-col flex-cc">
+          <p class="caption medium-text">
+            Find the book that's right for you!<br />
+            Just type in the genre, <i>et voilà</i>.
+          </p>
+        </div>
+        <!-- SEARCH BAR -->
+        <div class="search-container rel flex flex-cc">
+          <input
+            class="search-input focus b-radius w-100 small-text"
+            type="text"
+            placeholder="e.g. Fantasy" />
+          <button class="search-button abs focus-v b-radius">
+            <img
+              class="search-icon"
+              src="/assets/img/icon-search.png"
+              alt="Search icon" />
+          </button>
+        </div>
+      </header>
+
+      <!-- SEARCH RESULTS -->
+      <div class="search-results flex flex-col flex-cc"></div>
+
+      <footer class="footer-homepage flex flex-col flex-cc">
+        <div class="flex flex-cc">
+          <a
+            class="focus-v b-radius"
+            href="https://github.com/nikthewik"
+            target="_blank">
+            <img
+              class="social-icon"
+              src="/assets/img/icon-social-github.png"
+              alt="GitHub icon" />
+          </a>
+          <a
+            class="focus-v b-radius"
+            href="https://www.linkedin.com/in/nikthewik"
+            target="_blank">
+            <img
+              class="social-icon"
+              src="/assets/img/icon-social-linkedin.png"
+              alt="LinkedIn icon" />
+          </a>
+        </div>
+        <p class="x-small-text light-text dark-text">
+          Icons by
+          <a
+            class="focus-v b-radius dark-text"
+            href="https://icons8.com"
+            target="_blank"
+            >Icons8</a
+          >.
+        </p>
+        <p class="x-small-text light-text dark-text">
+          Copyright © 2023 Nicola Pavoni. All Rights Reserved.
+        </p>
+      </footer>
+    </div>
+  </body>
+</html>

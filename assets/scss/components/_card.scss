@@ -1,0 +1,15 @@
+@use "../abstracts/variables" as *;
+
+// CARD
+.card {
+  background-color: $clr-lighter;
+  border: 1px solid $clr-lighter;
+}
+
+.card-img-container {
+  height: 100%;
+}
+
+.card-img {
+  object-fit: cover;
+}
