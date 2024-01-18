@@ -5,7 +5,7 @@ This is a project built for the JavaScript Advanced exam on
 **simple**, **good-looking** website that helps users to discover books by
 typing a genre.
 
-![HandBook preview](https://raw.githubusercontent.com/nikthewik/handbook/main/assets/img/preview-handbook.png)
+![HandBook preview](https://raw.githubusercontent.com/nikthewik/handbook/main/assets/img/preview-handbook.jpg)
 
 ## Table of Contents
 
