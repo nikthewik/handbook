@@ -3,7 +3,6 @@
 // MEDIA QUERIES
 //SCREEN < 768px
 @media (max-width: 768px) {
-
   // CARDS
   .card {
     width: 100%;
@@ -32,7 +31,6 @@
 
 //SCREEN >= 768px
 @media (min-width: 768px) {
-
   // CARDS
   .search-results {
     flex-flow: row wrap;
@@ -73,7 +71,6 @@
 
 //SCREEN >= 1000px
 @media (min-width: 1000px) {
-
   // CARDS
   .search-results {
     width: min(74%, 38rem);
@@ -101,8 +98,8 @@
 
 // MEDIA QUERY FOR "HOVER" DEVICES
 @media (hover: hover) {
-
   .search-button,
+  .page-button,
   .card,
   .modal-button {
     &:hover {
@@ -111,6 +108,7 @@
   }
 
   a:hover,
+  .page-button:hover,
   .card:hover {
     box-shadow: 0 0 0.5rem $clr-darker-t;
     transition: all 0.2s ease-in-out;

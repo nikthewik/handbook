@@ -1,0 +1,23 @@
+@use "../abstracts/variables" as *;
+
+.loading {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  border: 3.5px solid $clr-light-t2;
+  border-radius: 50%;
+  border-top-color: $clr-lighter;
+  animation: spin 1s ease-in-out infinite;
+  -webkit-animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to {
+    -webkit-transform: rotate(360deg);
+  }
+}
+@-webkit-keyframes spin {
+  to {
+    -webkit-transform: rotate(360deg);
+  }
+}

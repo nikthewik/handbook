@@ -73,7 +73,7 @@
   </head>
   <body class="dark-text">
     <div class="flex flex-col flex-cc">
-      <!-- HEADER header-homepage sticky -->
+      <!-- HEADER -->
       <header class="header-homepage w-100 flex flex-col flex-cc">
         <!-- LOGO & BRAND -->
         <div class="flex flex-cc">
@@ -105,9 +105,23 @@
       </header>
 
       <!-- SEARCH RESULTS -->
-      <div class="search-results flex flex-col flex-cc"></div>
+      <div class="search-results flex flex-col flex-cc">
+        <!-- LOADER -->
+        <div class="loader hidden"></div>
+      </div>
 
+      <!-- PAGINATION BUTTONS -->
+      <div class="page-buttons hidden">
+        <button class="page-button focus-v b-radius small-text">1</button>
+        <button class="page-button focus-v b-radius small-text">2</button>
+        <button class="page-button focus-v b-radius small-text">3</button>
+        <button class="page-button focus-v b-radius small-text">4</button>
+        <button class="page-button focus-v b-radius small-text">5</button>
+      </div>
+
+      <!-- FOOTER -->
       <footer class="footer-homepage flex flex-col flex-cc">
+        <!-- SOCIAL -->
         <div class="flex flex-cc">
           <a
             class="focus-v b-radius"
@@ -132,6 +146,7 @@
             />
           </a>
         </div>
+        <!-- CREDITS -->
         <p class="courtesy-link flex flex-cc x-small-text light-text dark-text">
           Icons by
           <a
@@ -149,6 +164,7 @@
             Open Library.</a
           >
         </p>
+        <!-- COPYRIGHT -->
         <p class="x-small-text light-text dark-text">
           Copyright © 2024 Nicola Pavoni. All Rights Reserved.
         </p>
