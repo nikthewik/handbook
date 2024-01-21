@@ -12,18 +12,22 @@ const input = document.querySelector(".search-input");
 const searchBtn = document.querySelector(".search-button");
 const searchResults = document.querySelector(".search-results");
 const pageButtonsContainer = document.querySelector(".page-buttons");
-const pageButtons = document.querySelectorAll(".page-button");
+const previousBtn = document.querySelector(".previous-button");
+const nextBtn = document.querySelector(".next-button");
+const pageNum = document.querySelector(".page-number");
 
 let books = [];
 
 const page = {
-  index: 0,
+  current: 1,
+  minValue: 1,
+  maxValue: 5,
   bookIndex: 0,
   booksLimit: 20,
 
   calcBookIndex() {
     this.bookIndex = 0;
-    this.bookIndex += this.booksLimit * this.index;
+    this.bookIndex += this.booksLimit * (this.current - 1);
   },
 };
 
@@ -244,23 +248,12 @@ function toggleLoading(className = "loader") {
   loader.classList.toggle("loading");
 }
 
-function showPageButtons() {
-  pageButtonsContainer.classList.remove("hidden");
-  pageButtons.forEach((button) => button.classList.remove("page-active"));
-}
-
-function showFirstPage() {
-  pageButtons[0].classList.add("page-active");
-}
-
 // To Clear Results (Both Cards And Books)
 function clearResults() {
   const cards = document.querySelectorAll(".card");
-  if (cards) {
-    cards.forEach((card) => {
-      card.remove();
-    });
-  }
+  cards.forEach((card) => {
+    card.remove();
+  });
   books = [];
 }
 
@@ -269,9 +262,33 @@ function loadBooks(e) {
   e.preventDefault();
   clearResults();
   fetchBooks(input.value);
-  showPageButtons();
-  showFirstPage();
   input.blur();
+  page.current = page.minValue;
+  showPageButtons();
+  pageNum.textContent = `${page.minValue}`;
+}
+
+function loadNewPage() {
+  page.calcBookIndex();
+  clearResults();
+  fetchBooks(input.value);
+  pageNum.textContent = `${page.current}`;
+  showPageButtons();
+}
+
+function showPageButtons() {
+  pageButtonsContainer.classList.remove("hidden");
+
+  if (page.current === page.minValue) {
+    previousBtn.classList.add("invisible");
+    nextBtn.classList.remove("invisible");
+  } else if (page.current === page.maxValue) {
+    previousBtn.classList.remove("invisible");
+    nextBtn.classList.add("invisible");
+  } else {
+    previousBtn.classList.remove("invisible");
+    nextBtn.classList.remove("invisible");
+  }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -309,27 +326,16 @@ searchResults.addEventListener("click", (e) => {
   });
 });
 
-// To Change The Page Results
-pageButtonsContainer.addEventListener("click", (e) => {
-  const button = e.target.closest(".page-button");
+previousBtn.addEventListener("click", () => {
+  if (page.current > 1) {
+    page.current--;
+    loadNewPage();
+  }
+});
 
-  // Controlling If The Clicked Element Is A Button
-  if (!button) return;
-  if (!pageButtonsContainer.contains(button)) return;
-
-  if (!button.classList.contains("page-active")) {
-    showPageButtons();
-    // Removing The Active Class From All The Buttons
-    // pageButtons.forEach((button) => button.classList.remove("page-active"));
-
-    // Setting The Index Of The Page To Calculate The Index Of The Book
-    page.index = +button.textContent - 1;
-    page.calcBookIndex();
-
-    // Adding The Active Class To The Clicked Button
-    button.classList.add("page-active");
-
-    clearResults();
-    fetchBooks(input.value);
+nextBtn.addEventListener("click", () => {
+  if (page.current < page.maxValue) {
+    page.current++;
+    loadNewPage();
   }
 });

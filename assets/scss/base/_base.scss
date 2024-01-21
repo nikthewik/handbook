@@ -8,13 +8,15 @@ body {
 
 .search-results {
   width: min(74%, 23rem);
-  margin: 0.625rem 0 1rem 0;
+  margin: 0.625rem 0 1.5rem 0;
   gap: 0.313rem;
 }
 
 .page-buttons {
   margin: 0 0 1.875rem 0;
 }
+
+.page-number,
 .page-button {
   width: 1.5rem;
   margin: 0 0.15rem;
@@ -22,8 +24,9 @@ body {
   background: none;
 }
 
-.page-active {
-  background-color: $clr-lighter;
+.page-number {
+  display: inline-block;
+  text-align: center;
 }
 
 //------------------------------------------------------------------------------
@@ -46,6 +49,11 @@ body {
 // Display None
 .hidden {
   display: none;
+}
+
+// Invisible
+.invisible {
+  visibility: hidden;
 }
 
 // Position
