@@ -16,18 +16,31 @@ const previousBtn = document.querySelector(".previous-button");
 const nextBtn = document.querySelector(".next-button");
 const pageNum = document.querySelector(".page-number");
 
+// ARRAY OF BOOKS
 let books = [];
 
+// OBJECT FOR PAGINATION
 const page = {
-  current: 1,
-  minValue: 1,
-  maxValue: 5,
-  bookIndex: 0,
-  booksLimit: 20,
+  current: 1, // Current Page Number
+  curMin: 1, // Current Min Page Number
+  curMax: 5, // Current Max Page Number
 
+  minValue: 1, // Default Min Page Number
+  maxValue: 5, // Default Max Page Number
+
+  bookIndex: 0, // Index Of The Book From Which To Start Fetching The Data
+  booksLimit: 20, // Number Of Books To Fetch Per Request
+
+  // To Calculate The Index Of The Book
   calcBookIndex() {
     this.bookIndex = 0;
     this.bookIndex += this.booksLimit * (this.current - 1);
+  },
+
+  // To Reset Current Values
+  resetValues() {
+    this.current = this.curMin = this.minValue;
+    this.curMax = this.maxValue;
   },
 };
 
@@ -78,8 +91,8 @@ function renderModal(typeEl, obj) {
   // To Prevent Page From Scrolling In Background
   body.classList.add("overflow-h");
 
-  // CARD
-  // If typeEl Is card, The obj Is book. So We Render The Modal Of A Card With The Info Of The Book.
+  // CARD: If typeEl Is card, The obj Is book.
+  // We Render The Modal Of A Card With The Info Of The Book.
   if (typeEl === "card") {
     body.insertAdjacentHTML(
       "beforeend",
@@ -135,8 +148,8 @@ function renderModal(typeEl, obj) {
     }
   }
 
-  // ERROR
-  // If typeEl Is Error, The obj Is err. So We Render The Modal With An Error Message.
+  // ERROR: If typeEl Is Error, The obj Is err.
+  // We Render The Modal With An Error Message.
   if (typeEl === "error") {
     body.insertAdjacentHTML(
       "beforeend",
@@ -156,9 +169,9 @@ function renderModal(typeEl, obj) {
     );
   }
 
-  // Error Message If There Is No Internet Connection
   const modalSubtitle = document.querySelector(".modal-subtitle");
 
+  // Error Message If There Is No Internet Connection
   if (obj.message === "Failed to fetch")
     modalSubtitle.textContent =
       "Connection error. Make sure you are connected to the Internet.";
@@ -178,6 +191,7 @@ function renderModal(typeEl, obj) {
 async function fetchBooks(value) {
   try {
     toggleLoading();
+
     value = value.trim().toLowerCase();
     if (value === "")
       throw new Error("The input is empty. Please, insert a valid book genre.");
@@ -197,13 +211,29 @@ async function fetchBooks(value) {
 
     books = data.works;
 
+    // If There Are Fewer Books Than The Limit
+    if (books.length < page.booksLimit) {
+      page.curMax = page.current;
+    }
+
+    // If There Are No Books In New Pages, But There Are In Previous Ones
+    if (books.length === 0 && page.current !== 1)
+      throw new Error(
+        `Sorry, no more books found for this genre. Try with another one. :)`
+      );
+
+    // If There Are No Books At All (The Genre Is Invalid)
     if (books.length === 0)
       throw new Error(`No books found. Please, insert a valid book genre.`);
 
     books.map((book) => createCard(book));
+
     toggleLoading();
+    showPageButtonsContainer();
+    controlPageButtons();
   } catch (err) {
     toggleLoading();
+    hidePageButtonsContainer();
     renderModal("error", err);
   }
 }
@@ -220,12 +250,37 @@ async function fetchDescription(book, key) {
 
     const dataDes = await resDes.json();
 
+    // Setting New Property Description For The Book Object
     book.description = dataDes.description;
 
     renderModal("card", book);
   } catch (err) {
     renderModal("error", err);
   }
+}
+
+// To Load Books As Results
+function loadBooks() {
+  page.calcBookIndex();
+  pageNum.textContent = `${page.current}`;
+  clearResults();
+  fetchBooks(input.value);
+}
+
+// To Clear Results (Both Cards And Books)
+function clearResults() {
+  const cards = document.querySelectorAll(".card");
+  cards.forEach((card) => {
+    card.remove();
+  });
+  books = [];
+}
+
+// To Toggle The Loading Spinner
+function toggleLoading(className = "loader") {
+  const loader = document.querySelector(`.${className}`);
+  loader.classList.toggle("hidden");
+  loader.classList.toggle("loading");
 }
 
 // To Animate The Homepage A Single Time
@@ -241,51 +296,34 @@ function animateHome() {
   }
 }
 
-// To Toggle The Loading Spinner
-function toggleLoading(className = "loader") {
-  const loader = document.querySelector(`.${className}`);
-  loader.classList.toggle("hidden");
-  loader.classList.toggle("loading");
-}
-
-// To Clear Results (Both Cards And Books)
-function clearResults() {
-  const cards = document.querySelectorAll(".card");
-  cards.forEach((card) => {
-    card.remove();
-  });
-  books = [];
-}
-
-// To Load Books As Results
-function loadBooks(e) {
-  e.preventDefault();
-  clearResults();
-  fetchBooks(input.value);
-  input.blur();
-  page.current = page.minValue;
-  showPageButtons();
-  pageNum.textContent = `${page.minValue}`;
-}
-
-function loadNewPage() {
-  page.calcBookIndex();
-  clearResults();
-  fetchBooks(input.value);
-  pageNum.textContent = `${page.current}`;
-  showPageButtons();
-}
-
-function showPageButtons() {
+// To Show Page Buttons Container
+function showPageButtonsContainer() {
   pageButtonsContainer.classList.remove("hidden");
+}
 
-  if (page.current === page.minValue) {
+// To Hide Page Buttons Container
+function hidePageButtonsContainer() {
+  pageButtonsContainer.classList.add("hidden");
+}
+
+// To Control Visibility Of Page Buttons
+function controlPageButtons() {
+  if (page.current === page.curMin && page.current !== page.curMax) {
     previousBtn.classList.add("invisible");
     nextBtn.classList.remove("invisible");
-  } else if (page.current === page.maxValue) {
+  }
+
+  if (page.current === page.curMax && page.current !== page.curMin) {
     previousBtn.classList.remove("invisible");
     nextBtn.classList.add("invisible");
-  } else {
+  }
+
+  if (page.current === page.curMin && page.current === page.curMax) {
+    previousBtn.classList.add("invisible");
+    nextBtn.classList.add("invisible");
+  }
+
+  if (page.current !== page.curMax && page.current !== page.curMin) {
     previousBtn.classList.remove("invisible");
     nextBtn.classList.remove("invisible");
   }
@@ -302,13 +340,19 @@ input.addEventListener("click", () => {
 // To Search For Books (By Clicking Enter On The Keyboard)
 input.addEventListener("keyup", (e) => {
   if (e.key === "Enter") {
-    loadBooks(e);
+    e.preventDefault();
+    page.resetValues();
+    loadBooks();
+    input.blur();
   }
 });
 
 // To Search For Books (By Clicking On The Button)
 searchBtn.addEventListener("click", (e) => {
-  loadBooks(e);
+  e.preventDefault();
+  page.resetValues();
+  loadBooks();
+  input.blur();
 });
 
 // To Fetch The Description Of The Target Book
@@ -319,23 +363,25 @@ searchResults.addEventListener("click", (e) => {
   if (!card) return;
   if (!searchResults.contains(card)) return;
 
-  // If It Is, We Filter The Books By The Key Stored In The Target Card's Dataset
+  // We Filter The Books By The Key Stored In The Target Card's Dataset
   // Then We Fetch The Description Of The Corrisponding Book
   books.filter((book) => {
     if (book.key === card.dataset.key) fetchDescription(book, card.dataset.key);
   });
 });
 
+// Previous Btn: To Change Pagination
 previousBtn.addEventListener("click", () => {
-  if (page.current > 1) {
+  if (page.current > page.curMin) {
     page.current--;
-    loadNewPage();
+    loadBooks();
   }
 });
 
+// Next Btn: To Change Pagination
 nextBtn.addEventListener("click", () => {
-  if (page.current < page.maxValue) {
+  if (page.current < page.curMax) {
     page.current++;
-    loadNewPage();
+    loadBooks();
   }
 });
