@@ -13,6 +13,7 @@ typing a genre.
   - [The assignment](#the-assignment)
   - [Technologies used](#technologies-used)
   - [Link](#link)
+- [Installation](#installation)
 - [Author](#author)
 - [License](#license)
 - [Acknowledgments](#acknowledgments)
@@ -43,6 +44,18 @@ All additional features deemed necessary are allowed.
 ### Link
 
 - HandBook - [Click here](https://ntw-handbook.netlify.app/).
+
+## Installation
+
+This project uses Parcel as a bundler to handle dependencies and the application bundle.
+
+Make sure you have [Node.js](https://nodejs.org/) installed before proceeding with the installation of dependencies.
+
+To install HandBook, simply run `npm install` in the terminal.
+
+To start the application, run `npm start` or `npm run start`.
+
+To build the application, run `npm run build`.
 
 ## Author
 
