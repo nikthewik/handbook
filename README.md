@@ -10,12 +10,35 @@ typing a genre.
 ## Table of Contents
 
 - [Overview](#overview)
+  - [The assignment](#the-assignment)
+  - [Technologies used](#technologies-used)
   - [Link](#link)
 - [Author](#author)
 - [License](#license)
 - [Acknowledgments](#acknowledgments)
 
 ## Overview
+
+### The assignment
+
+Creating an application equipped with a **search bar** that allows the user to find all the books in a specific category.
+
+The application must contact the API of the external service Open Library to obtain the data of books in the searched category.
+
+Upon the user's click on a book or a button, the app should be able to display the book's description by contacting another API of the Open Library service and passing the key of the selected book.
+
+All additional features deemed necessary are allowed.
+
+### Technologies used
+
+- Parcel
+- Semantic HTML
+- CSS and SCSS
+- JS
+- Flexbox
+- Responsive design
+- Mobile-first workflow
+- [Open Library API](https://openlibrary.org/dev/docs/api/subjects)
 
 ### Link
 
@@ -37,5 +60,6 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 - [ChatGPT](https://openai.com/blog/chatgpt) - An artificial intelligence
   chatbot (developed by OpenAI), which I mainly used to review some JavaScript
   code;
+- [Codeium](https://codeium.com/) - An extension for VS Code that provides code autocompletion, search, and chat-based assistance directly within the Visual Studio Code IDE;
 - [Stack Overflow](https://stackoverflow.com/) - A wonderful community where you
   can find a solution to every Front-End Development problem and not only.
