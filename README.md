@@ -33,6 +33,7 @@ All additional features deemed necessary are allowed.
 ### Technologies used
 
 - Parcel
+- Lodash
 - Semantic HTML
 - CSS and SCSS
 - JS
