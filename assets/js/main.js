@@ -1,6 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 // IMPORTS
+import _ from "lodash";
 import closeImg from "url:../img/icon-close.png";
 import noImg from "url:../img/icon-no-image.png";
 
@@ -49,38 +50,40 @@ const page = {
 // FUNCTIONS
 // To Create A Card
 function createCard(book) {
+  const key = _.get(book, "key", "");
+  const cover = _.get(book, "cover_id", "");
+  const title = _.get(book, "title", "");
+  const authors = _.get(book, "authors", []);
+
   searchResults.insertAdjacentHTML(
     "beforeend",
     `
-    <button class="card focus-v b-radius flex flex-cc" data-key="${book.key}">
+    <button class="card focus-v b-radius flex flex-cc" data-key="${key}">
       <div class="card-img-container">
         <img class="card-img" src="${
-          book.cover_id
-            ? `https://covers.openlibrary.org/b/id/${book.cover_id}-M.jpg`
-            : noImg
-        }" alt="${book.title}">
+          cover ? `https://covers.openlibrary.org/b/id/${cover}-M.jpg` : noImg
+        }" alt="${title}">
       </div>
       <div class="card-text dark-text word-wrap flex flex-col">
         <p class="small-text">${
-          book.title.length > 19
-            ? `${book.title.slice(0, 19).trim()}...`
-            : book.title.trim()
+          title.length > 19 ? `${title.slice(0, 19).trim()}...` : title.trim()
         }
         </p>
         <p class="author x-small-text light-text">${
-          book.authors.map((author) => author.name).join(", ").length > 19
-            ? `${book.authors
-                .map((author) => author.name)
+          authors.map((author) => _.get(author, "name", "")).join(", ").length >
+          19
+            ? `${authors
+                .map((author) => _.get(author, "name", ""))
                 .join(", ")
                 .slice(0, 19)}...`
-            : `${book.authors.map((author) => author.name).join(", ")}`
+            : `${authors.map((author) => _.get(author, "name", "")).join(", ")}`
         }
     </button>
     `
   );
 
   // Controlling Data For Authors
-  if (book.authors.length === 0) {
+  if (authors.length === 0) {
     const cardAuthor = document.querySelector(".author");
     cardAuthor.textContent = "Unknown author";
   }
@@ -94,6 +97,12 @@ function renderModal(typeEl, obj) {
   // CARD: If typeEl Is card, The obj Is book.
   // We Render The Modal Of A Card With The Info Of The Book.
   if (typeEl === "card") {
+    const cover = _.get(obj, "cover_id", "");
+    const title = _.get(obj, "title", "");
+    const authors = _.get(obj, "authors", []);
+    const year = _.get(obj, "first_publish_year", "");
+    const des = _.get(obj, "description", "");
+
     body.insertAdjacentHTML(
       "beforeend",
       `
@@ -102,24 +111,26 @@ function renderModal(typeEl, obj) {
             <div class="modal-img-container flex flex-col flex-cc">
               <div class="modal-loader hidden"></div>
               <img class="modal-img" src="${
-                obj.cover_id
-                  ? `https://covers.openlibrary.org/b/id/${obj.cover_id}-M.jpg`
+                cover
+                  ? `https://covers.openlibrary.org/b/id/${cover}-M.jpg`
                   : noImg
-              }" alt="${obj.title}">
+              }" alt="${title}">
             </div>
             <div class="modal-text dark-text flex flex-col">
-              <p class="modal-title medium-text">${obj.title}</p>
+              <p class="modal-title medium-text">${title}</p>
               <p class="modal-subtitle small-text light-text">${
-                obj.authors.length > 0
-                  ? obj.authors.map((author) => author.name).join(", ")
+                authors.length > 0
+                  ? authors
+                      .map((author) => _.get(author, "name", ""))
+                      .join(", ")
                   : "Unknown author"
               }</p>
               <p class="modal-subtitle2 x-small-text light-text">
-                ${obj.first_publish_year}
+                ${year}
               </p>
             </div>
             <p class="modal-description x-small-text light-text dark-text scrollbar overflow-x-h word-wrap">
-              ${obj.description}
+              ${des}
             </p>
             <button class="modal-button focus-v b-radius abs">
               <img class="modal-close-img" src="${closeImg}" alt="Icon to close window">
@@ -139,11 +150,11 @@ function renderModal(typeEl, obj) {
     });
 
     // Controlling Data For Description
-    if (typeof obj.description === "object") {
-      modalDescription.textContent = `${obj.description.value}`;
+    if (typeof des === "object") {
+      modalDescription.textContent = `${_.get(des, "value", "")}`;
     }
 
-    if (typeof obj.description === "undefined" || obj.description === "") {
+    if (typeof des === "undefined" || des === "") {
       modalDescription.textContent = "No description available";
     }
   }
@@ -209,7 +220,7 @@ async function fetchBooks(value) {
 
     const data = await res.json();
 
-    books = data.works;
+    books = _.get(data, "works", []);
 
     // If There Are Fewer Books Than The Limit
     if (books.length < page.booksLimit) {
@@ -251,7 +262,7 @@ async function fetchDescription(book, key) {
     const dataDes = await resDes.json();
 
     // Setting New Property Description For The Book Object
-    book.description = dataDes.description;
+    book.description = _.get(dataDes, "description", "");
 
     renderModal("card", book);
   } catch (err) {
@@ -364,9 +375,10 @@ searchResults.addEventListener("click", (e) => {
   if (!searchResults.contains(card)) return;
 
   // We Filter The Books By The Key Stored In The Target Card's Dataset
-  // Then We Fetch The Description Of The Corrisponding Book
+  // We Fetch The Description Of The Corrisponding Book
   books.filter((book) => {
-    if (book.key === card.dataset.key) fetchDescription(book, card.dataset.key);
+    const key = _.get(book, "key", "");
+    if (key === card.dataset.key) fetchDescription(book, card.dataset.key);
   });
 });
 
